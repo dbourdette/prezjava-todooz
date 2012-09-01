@@ -2,14 +2,22 @@ package fr.todooz.domain;
 
 import java.util.Date;
 
-public class Task {
-    private Date createdAt;
+import org.apache.commons.lang.StringUtils;
 
+public class Task {
+    private Date createdAt = new Date();
+
+    private String title;
+    
     private String text;
 
     private Date date;
 
     private String tags;
+    
+    public String[] getTagArray() {
+    	return StringUtils.split(tags, ",");
+    }
 
     public Date getCreatedAt() {
         return createdAt;
@@ -18,8 +26,16 @@ public class Task {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+    
+    public String getTitle() {
+		return title;
+	}
 
-    public Date getDate() {
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Date getDate() {
         return date;
     }
 
