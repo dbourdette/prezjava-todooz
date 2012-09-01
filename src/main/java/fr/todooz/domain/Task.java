@@ -2,32 +2,58 @@ package fr.todooz.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 
+@Entity
+@Table(name = "task")
 public class Task {
-    private Date createdAt = new Date();
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    private String title;
-    
-    private String text;
+	@Column
+	private Date createdAt = new Date();
 
-    private Date date;
+	@Column
+	private String title;
 
-    private String tags;
-    
-    public String[] getTagArray() {
-    	return StringUtils.split(tags, ",");
-    }
+	@Column(length = 4000, nullable = true)
+	private String text;
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+	@Column
+	private Date date;
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-    
-    public String getTitle() {
+	@Column(nullable = true)
+	private String tags;
+
+	public String[] getTagArray() {
+		return StringUtils.split(tags, ",");
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public String getTitle() {
 		return title;
 	}
 
@@ -36,26 +62,26 @@ public class Task {
 	}
 
 	public Date getDate() {
-        return date;
-    }
+		return date;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-    public String getTags() {
-        return tags;
-    }
+	public String getTags() {
+		return tags;
+	}
 
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
 
-    public String getText() {
-        return text;
-    }
+	public String getText() {
+		return text;
+	}
 
-    public void setText(String text) {
-        this.text = text;
-    }
+	public void setText(String text) {
+		this.text = text;
+	}
 }
