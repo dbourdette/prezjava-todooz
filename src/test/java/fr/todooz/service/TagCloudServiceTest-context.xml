@@ -10,6 +10,6 @@
 
 	<import resource="test-context.xml" />
 
-	<bean class="fr.todooz.service.TaskServiceImpl" />
+	<bean class="fr.todooz.service.TagCloudServiceImpl" />
 
 </beans>
