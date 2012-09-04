@@ -9,10 +9,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.todooz.domain.Task;
 
+@Service
 public class TaskServiceImpl implements TaskService {
 	@Inject
 	private SessionFactory sessionFactory;
