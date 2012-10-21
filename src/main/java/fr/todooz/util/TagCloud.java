@@ -7,6 +7,10 @@ import java.util.List;
 public class TagCloud {
 	private List<String> tags = new ArrayList<String>();
 
+	public List<String> getTags() {
+		return tags;
+	}
+	
     public void add(String... tags) {
     	if (tags == null) {
     		return;

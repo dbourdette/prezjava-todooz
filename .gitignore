@@ -1,3 +1,10 @@
+Author: damien bourdette <dbourdette@gmail.com>
+#################
+## Intellij
+#################
+.idea
+*.iml
+
 #################
 ## Maven
 #################

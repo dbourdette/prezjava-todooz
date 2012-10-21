@@ -10,7 +10,7 @@
 <head>
     <title>Todooz</title>
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -35,19 +35,9 @@
 
             <div>
                 <legend>Tags</legend>
-                <a href="/tag/java" style="font-size:14px">java</a>
-                <a href="/tag/java" style="font-size:20px">java</a>
-                <a href="/tag/java" style="font-size:16px">java</a>
-                <a href="/tag/java" style="font-size:12px">java</a>
-                <a href="/tag/java" style="font-size:10px">java</a>
-                <a href="/tag/java" style="font-size:22px">java</a>
-                <a href="/tag/java" style="font-size:12px">java</a>
-                <a href="/tag/java" style="font-size:14px">java</a>
-                <a href="/tag/java" style="font-size:18px">java</a>
-                <a href="/tag/java" style="font-size:24px">java</a>
-                <a href="/tag/java" style="font-size:12px">java</a>
-                <a href="/tag/java" style="font-size:10px">java</a>
-                <a href="/tag/java" style="font-size:14px">java</a>
+                <c:forEach var="tag" items="${tagCloud.tags}">
+                	<a href="/tag/${tag}" style="font-size:14px">${tag}</a>
+                </c:forEach>
             </div>
         </div>
     </div>

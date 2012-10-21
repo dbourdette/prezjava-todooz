@@ -5,21 +5,62 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.joda.time.DateMidnight;
+import org.joda.time.Interval;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import fr.todooz.domain.Task;
+import fr.todooz.service.TagCloudService;
 import fr.todooz.service.TaskService;
+import fr.todooz.util.IntervalUtils;
 
 @Controller
 public class IndexController {
 	@Inject
 	private TaskService taskService;
 	
+	@Inject
+	private TagCloudService tagCloudService;
+	
 	@RequestMapping({ "/", "/index" })
 	public String index(Model model) {
 		model.addAttribute("tasks", taskService.findAll());
+		model.addAttribute("tagCloud", tagCloudService.buildTagCloud());
+
+		return "index";
+	}
+	
+	@RequestMapping("/search")
+	public String search(String query, Model model) {
+		model.addAttribute("tasks", taskService.findByQuery(query));
+		model.addAttribute("tagCloud", tagCloudService.buildTagCloud());
+
+		return "index";
+	}
+	
+	@RequestMapping("/tag/{tag}")
+	public String tag(@PathVariable String tag, Model model) {
+		model.addAttribute("tasks", taskService.findByTag(tag));
+		model.addAttribute("tagCloud", tagCloudService.buildTagCloud());
+
+		return "index";
+	}
+	
+	@RequestMapping("/today")
+	public String today(Model model) {
+		model.addAttribute("tasks", taskService.findByInterval(IntervalUtils.todayInterval()));
+		model.addAttribute("tagCloud", tagCloudService.buildTagCloud());
+
+		return "index";
+	}
+	
+	@RequestMapping("/tomorrow")
+	public String tomorrow(Model model) {
+		model.addAttribute("tasks", taskService.findByInterval(IntervalUtils.tomorrowInterval()));
+		model.addAttribute("tagCloud", tagCloudService.buildTagCloud());
 
 		return "index";
 	}

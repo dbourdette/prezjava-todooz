@@ -43,6 +43,4 @@
 	<!-- active le support des annotations @Transactional -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<bean class="fr.todooz.service.TaskServiceImpl" />
-
 </beans>
