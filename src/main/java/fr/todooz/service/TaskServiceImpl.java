@@ -7,9 +7,11 @@ import javax.inject.Inject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.ArrayUtils;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.Interval;
@@ -28,7 +30,7 @@ public class TaskServiceImpl implements TaskService {
 	public void save(Task task) {
 		Session session = sessionFactory.getCurrentSession();
 		
-		session.save(task);
+		session.saveOrUpdate(task);
 	}
 
 	@Override
@@ -42,18 +44,13 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Task> findAll() {
-		Session session = sessionFactory.getCurrentSession();
-
-		return session.createCriteria(Task.class).list();
+		return criteria().list();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Task> findByQuery(String query) {
-		Session session = sessionFactory.getCurrentSession();
-
-		return session.createCriteria(Task.class)
-				.add(Restrictions.ilike("title", query, MatchMode.ANYWHERE)).list();
+		return criteria().add(Restrictions.ilike("title", query, MatchMode.ANYWHERE)).list();
 	}
 	
 	@Override
@@ -74,9 +71,7 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Task> findByInterval(Interval interval) {
-		Session session = sessionFactory.getCurrentSession();
-
-		return session.createCriteria(Task.class)
+		return criteria()
 			.add(Restrictions.between("date", interval.getStart().toDate(), interval.getEnd().toDate()))
 			.list();
 	}
@@ -89,4 +84,18 @@ public class TaskServiceImpl implements TaskService {
 		return ((Long) session.createCriteria(Task.class)
 				.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 	}
+
+    @Override
+    @Transactional(readOnly = true)
+    public Task findById(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+
+        return (Task) session.get(Task.class, id);
+    }
+
+    private Criteria criteria() {
+        Session session = sessionFactory.getCurrentSession();
+
+        return session.createCriteria(Task.class).addOrder(Order.desc("date"));
+    }
 }

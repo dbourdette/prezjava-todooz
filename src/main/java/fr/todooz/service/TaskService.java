@@ -22,4 +22,5 @@ public interface TaskService {
 
 	public int count();
 
+    public Task findById(Long id);
 }

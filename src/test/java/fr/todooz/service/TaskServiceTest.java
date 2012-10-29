@@ -45,6 +45,16 @@ public class TaskServiceTest {
 	public void save() {
 		taskService.save(task());
 	}
+
+    @Test
+    public void udpate() {
+        Task task = task();
+
+        taskService.save(task);
+        taskService.save(task);
+
+        Assert.assertEquals(1, taskService.count());
+    }
 	
 	@Test
 	public void delete() {
@@ -106,13 +116,23 @@ public class TaskServiceTest {
 
 	    Assert.assertEquals(2, taskService.count());
 	}
-	
+
+    @Test
+    public void findById() {
+        Task task = task();
+        taskService.save(task);
+
+        Task dbTask = taskService.findById(task.getId());
+
+        Assert.assertEquals("Read Effective Java", dbTask.getTitle());
+    }
+
 	private Task task() {
 		return task("java,java");
 	}
 	
 	private Task task(String tags) {
-		return task(new Date(), "java,java");
+		return task(new Date(), tags);
 	}
 	
 	private Task task(Date date, String tags) {
