@@ -8,7 +8,11 @@
 	<name>todooz</name>
 	<url>http://maven.apache.org</url>
 
-	<build>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
 		<testResources>
 			<testResource>
 				<directory>${basedir}/src/test/java</directory>
