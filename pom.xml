@@ -41,6 +41,18 @@
 					<path>/</path>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+			   <groupId>org.glassfish</groupId>
+			   <artifactId>maven-embedded-glassfish-plugin</artifactId>
+			   <version>3.1.1</version>
+			   <configuration>
+			       <ports>
+			           <http-listener>8080</http-listener>
+			       </ports>
+			      <contextRoot>/</contextRoot>
+			   </configuration>
+			</plugin>
 		</plugins>
 	</build>
 
