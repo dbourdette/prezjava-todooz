@@ -6,6 +6,14 @@
 
 	<display-name>todooz</display-name>
 
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>WEB-INF/spring-context.xml</param-value>
+    </context-param>
+
 	<!-- Spring servlet -->
 	<servlet>
 		<servlet-name>spring</servlet-name>
@@ -16,6 +24,19 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+    <!-- Metro listener and servlet -->
+    <listener>
+        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>todoozWebService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>todoozWebService</servlet-name>
+        <url-pattern>/ws/todooz</url-pattern>
+    </servlet-mapping>
 
     <!-- Spring UTF-8 filter -->
     <filter>
