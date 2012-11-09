@@ -18,6 +18,8 @@ import org.joda.time.Interval;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.todooz.annotation.FlushCache;
+import fr.todooz.annotation.UseCache;
 import fr.todooz.domain.Task;
 
 @Service
@@ -27,6 +29,7 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	@Transactional
+    @FlushCache
 	public void save(Task task) {
 		Session session = sessionFactory.getCurrentSession();
 		
@@ -35,6 +38,7 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	@Transactional
+    @FlushCache
 	public void delete(Long id) {
 		Session session = sessionFactory.getCurrentSession();
 
@@ -43,18 +47,21 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	@Transactional(readOnly = true)
+    @UseCache
 	public List<Task> findAll() {
 		return criteria().list();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
+    @UseCache
 	public List<Task> findByQuery(String query) {
 		return criteria().add(Restrictions.ilike("title", query, MatchMode.ANYWHERE)).list();
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
+    @UseCache
 	public List<Task> findByTag(final String tag) {
 		List<Task> tasks = findAll();
 		
@@ -70,6 +77,7 @@ public class TaskServiceImpl implements TaskService {
 	
 	@Override
 	@Transactional(readOnly = true)
+    @UseCache
 	public List<Task> findByInterval(Interval interval) {
 		return criteria()
 			.add(Restrictions.between("date", interval.getStart().toDate(), interval.getEnd().toDate()))
@@ -78,6 +86,7 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	@Transactional(readOnly = true)
+    @UseCache
 	public int count() {
 		Session session = sessionFactory.getCurrentSession();
 

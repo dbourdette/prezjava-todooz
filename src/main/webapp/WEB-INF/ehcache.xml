@@ -1,0 +1,4 @@
+<ehcache>
+    <defaultCache maxElementsInMemory="500" eternal="true" overflowToDisk="false" memoryStoreEvictionPolicy="LFU"/>
+    <cache name="tasksCache" maxElementsInMemory="500" eternal="true" overflowToDisk="false" memoryStoreEvictionPolicy="LRU"/>
+</ehcache>
