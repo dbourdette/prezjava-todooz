@@ -1,10 +1,15 @@
 package fr.todooz.web.controller;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +30,19 @@ public class IndexController {
 	
 	@Inject
 	private TagCloudService tagCloudService;
-	
-	@ModelAttribute
+
+    @Inject
+    private DataSource dataSource;
+
+    @ModelAttribute
 	public TagCloud tagCloud() {
 		return tagCloudService.buildTagCloud();
 	}
+
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
 	
 	@RequestMapping({ "/", "/index" })
 	public String index(Model model) {
@@ -61,6 +74,41 @@ public class IndexController {
 
 		return "index";
 	}
+
+    @PostConstruct
+    public void initUsers() throws SQLException {
+        Connection connection = dataSource.getConnection();
+
+        try {
+            if (!tableExists("users")) {
+                connection.prepareStatement("create table users (username varchar(50), password varchar(50), enabled boolean)").execute();
+            }
+
+            if (!tableExists("authorities")) {
+                connection.prepareStatement("create table authorities (username varchar(50), authority varchar(50))").execute();
+            }
+
+            connection.prepareStatement("delete from authorities").execute();
+            connection.prepareStatement("delete from users").execute();
+
+            connection.prepareStatement("insert into users (username, password, enabled) values ('test', 'user', true)").execute();
+            connection.prepareStatement("insert into authorities (username, authority) values ('test', 'ROLE_USER')").execute();
+        } finally {
+            connection.close();
+        }
+    }
+
+    private boolean tableExists(String name) throws SQLException {
+        Connection connection = dataSource.getConnection();
+
+        try {
+            DatabaseMetaData dbmd = connection.getMetaData();
+            ResultSet rs = dbmd.getTables(null, "APP", name.toUpperCase(), null);
+            return rs.next();
+        } finally {
+            connection.close();
+        }
+    }
 	
 	@PostConstruct
 	public void bootstrap() {

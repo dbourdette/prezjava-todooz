@@ -45,6 +45,8 @@
             </form:form>
         </div>
         <div class="span3">
+            <widget:current_user />
+
             <div>
                 <legend>Quick links</legend>
                 <ul>
