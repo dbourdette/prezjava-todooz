@@ -63,6 +63,10 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	    </property>
 	    <property name="packagesToScan" value="fr.todooz.domain"/>
 	</bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 	
 	<!-- ajoute un gestionnaire de transactions lié à la sessionFactory -->
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
