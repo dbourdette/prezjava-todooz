@@ -17,6 +17,17 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+    <!-- EJB servlet -->
+    <servlet>
+        <servlet-name>ejb</servlet-name>
+        <servlet-class>fr.todooz.web.servlet.HelloWorldServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ejb</servlet-name>
+        <url-pattern>/HelloWorldServlet</url-pattern>
+    </servlet-mapping>
+
     <!-- Spring UTF-8 filter -->
     <filter>
         <filter-name>encoding-filter</filter-name>

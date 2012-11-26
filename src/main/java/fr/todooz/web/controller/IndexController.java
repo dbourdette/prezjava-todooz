@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -11,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import fr.todooz.domain.Task;
+import fr.todooz.ejb.MoreSeriousEJB;
 import fr.todooz.service.TagCloudService;
 import fr.todooz.service.TaskService;
 import fr.todooz.util.IntervalUtils;
@@ -25,6 +28,9 @@ public class IndexController {
 	
 	@Inject
 	private TagCloudService tagCloudService;
+
+    @EJB(mappedName = "java:module/MoreSeriousEJB")
+    private MoreSeriousEJB moreSeriousEJB;
 	
 	@ModelAttribute
 	public TagCloud tagCloud() {
@@ -55,6 +61,12 @@ public class IndexController {
 	public String tomorrow(Model model) {
 		return page(model, taskService.findByInterval(IntervalUtils.tomorrowInterval()));
 	}
+
+    @RequestMapping("/hello")
+    @ResponseBody
+    public String hello(Model model) {
+        return moreSeriousEJB.hello("EJBs from Controller");
+    }
 	
 	public String page(Model model, List<Task> tasks) {
 		model.addAttribute("tasks", tasks);

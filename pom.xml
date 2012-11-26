@@ -41,6 +41,18 @@
 					<path>/</path>
 				</configuration>
 			</plugin>
+
+            <plugin>
+                <groupId>org.glassfish</groupId>
+                <artifactId>maven-embedded-glassfish-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <ports>
+                        <http-listener>8080</http-listener>
+                    </ports>
+                    <contextRoot>/</contextRoot>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -179,5 +191,12 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <version>1.0.1.Final</version>
+            <scope>provided</scope>
+        </dependency>
 	</dependencies>
 </project>
