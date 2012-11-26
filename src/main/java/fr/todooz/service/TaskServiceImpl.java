@@ -15,12 +15,14 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.Interval;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.todooz.domain.Task;
 
 @Service
+@Qualifier("hibernate")
 public class TaskServiceImpl implements TaskService {
 	@Inject
 	private SessionFactory sessionFactory;

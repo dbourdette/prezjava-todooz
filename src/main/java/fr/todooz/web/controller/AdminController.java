@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ import fr.todooz.util.TagCloud;
 @Controller
 public class AdminController {
     @Inject
+    @Qualifier("jpa")
     private TaskService taskService;
 
     @Inject
