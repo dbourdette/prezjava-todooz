@@ -16,6 +16,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "task")
+@com.google.code.morphia.annotations.Entity(value = "tasks", noClassnameStored = true)
 public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
